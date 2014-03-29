@@ -19,17 +19,13 @@ public class PageDataYam {
 		LinkedList<StringBuffer> albumNumberAndPhotoCountList = new LinkedList<StringBuffer>();
 		boolean isLocked = false;
    	   	for(String s : htmlContent) {
-    	   		if(s.indexOf("http://pics.yamedia.tw/images/password.png") > 0) {
-    	   			isLocked = true;
-    	   		} 
+    	   		if(s.indexOf("/alt") > 0) {
+    	   			albumNumberAndPhotoCountList.addLast(new StringBuffer(s.substring(s.indexOf("/alt") + 6, s.indexOf("\" titl")) + " "));
+    	   			System.out.println(s.substring(s.indexOf("/alt") + 6, s.indexOf("\" titl")));
+    	   		}
     	   		else if(s.indexOf("<!-- 相片 -->") > 0) {
-    	   			
-    	   			albumNumberAndPhotoCountList.addLast(new StringBuffer(filterNumberForSubString(s.indexOf("相片") - 15, s.indexOf("相片"), s)));
+    	   			albumNumberAndPhotoCountList.getLast().append(filterNumberForSubString(s.indexOf("相片") - 15, s.indexOf("相片"), s));
     	   			albumNumberAndPhotoCountList.getLast().append(" (" + filterNumberForSubString(52, 70, s) + ")");
-    	   			if(isLocked) {
-    	   				albumNumberAndPhotoCountList.getLast().append(" locked");
-    	   				isLocked = false;
-    	   			}
     	   		}
     	   		else if(s.indexOf("<!-- 最後一頁 -->") > 0 && getPageNumber() == 0) {
     	   			StringBuffer string = new StringBuffer(filterNumberForSubString(s.indexOf("1/"), s.length(), s));

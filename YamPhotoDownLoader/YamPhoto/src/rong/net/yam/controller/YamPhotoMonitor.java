@@ -70,10 +70,11 @@ public class YamPhotoMonitor {
 	public void downLoadAlbum() {
 		String listRowContent = yamPhotoWindow.getAlbumNumberList().getSelectedValue().toString();
 		String[] albumNumberAndPhotoCount = listRowContent.split(" ");
-		
+		String albumNumber = albumNumberAndPhotoCount[albumNumberAndPhotoCount.length - 2];
+		String photoCount = albumNumberAndPhotoCount[albumNumberAndPhotoCount.length - 1];
 		downLoadThread = new DownLoadThread();
-		downLoadThread.setAlbumNumber(pageDataYam.filterNumberForSubString(0, albumNumberAndPhotoCount[0].length(), albumNumberAndPhotoCount[0]));
-		downLoadThread.setPhotoCount(Integer.parseInt(pageDataYam.filterNumberForSubString(0, albumNumberAndPhotoCount[1].length(), albumNumberAndPhotoCount[1])));
+		downLoadThread.setAlbumNumber(pageDataYam.filterNumberForSubString(0, albumNumber.length(), albumNumber));
+		downLoadThread.setPhotoCount(Integer.parseInt(pageDataYam.filterNumberForSubString(0, photoCount.length(), photoCount)));
 		downLoadThread.setUserName(pageDataYam.getUserName());
 		downLoadThread.setYamPhotoMonitor(this);
         Thread thread = new Thread(downLoadThread);

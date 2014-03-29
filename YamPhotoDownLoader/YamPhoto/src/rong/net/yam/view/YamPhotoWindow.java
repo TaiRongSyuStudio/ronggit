@@ -23,6 +23,8 @@ import java.nio.file.Paths;
 import javax.swing.JProgressBar;
 
 import com.thoughtworks.xstream.XStream;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class YamPhotoWindow {
 	private Configuration configuration;
@@ -69,8 +71,8 @@ public class YamPhotoWindow {
 		setConfiguration();
 		
 		frmYamdownloaderVersionFor = new JFrame();
-		frmYamdownloaderVersionFor.setTitle("YamAlbumDownLoader for java v1.2");
-		frmYamdownloaderVersionFor.setBounds(100, 100, 492, 357);
+		frmYamdownloaderVersionFor.setTitle("YamAlbumDownLoader for java v1.3");
+		frmYamdownloaderVersionFor.setBounds(100, 100, 722, 422);
 		frmYamdownloaderVersionFor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmYamdownloaderVersionFor.getContentPane().setLayout(null);
 		
@@ -79,7 +81,7 @@ public class YamPhotoWindow {
 		frmYamdownloaderVersionFor.getContentPane().add(userNameLabel);
 		
 		userNameField = new JTextField();
-		userNameField.setBounds(91, 30, 213, 21);
+		userNameField.setBounds(91, 29, 195, 21);
 		frmYamdownloaderVersionFor.getContentPane().add(userNameField);
 		userNameField.setColumns(10);
 		
@@ -88,39 +90,43 @@ public class YamPhotoWindow {
 		frmYamdownloaderVersionFor.getContentPane().add(albumNumberLabel);
 		
 		albumNumberList = new JList();
-		albumNumberList.setBounds(90, 65, 214, 215);
+		albumNumberList.setBounds(91, 65, 513, 215);
 		frmYamdownloaderVersionFor.getContentPane().add(albumNumberList);
 		
 		albumListGetterButton = new JButton("\u53D6\u5F97\u76F8\u7C3F\u5217\u8868");
-		albumListGetterButton.setBounds(333, 28, 116, 23);
+		albumListGetterButton.setBounds(285, 30, 116, 23);
 		frmYamdownloaderVersionFor.getContentPane().add(albumListGetterButton);
 		
 		downLoadButton = new JButton("\u4E0B\u8F09");
 		downLoadButton.setEnabled(false);
-		downLoadButton.setBounds(333, 79, 116, 23);
+		downLoadButton.setBounds(608, 292, 86, 23);
 		frmYamdownloaderVersionFor.getContentPane().add(downLoadButton);
 		
 		stopDownLoadButton = new JButton("\u505C\u6B62");
+		stopDownLoadButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		stopDownLoadButton.setEnabled(false);
-		stopDownLoadButton.setBounds(333, 130, 116, 23);
+		stopDownLoadButton.setBounds(608, 359, 86, 23);
 		frmYamdownloaderVersionFor.getContentPane().add(stopDownLoadButton);
 		
 		nextPageButton = new JButton("\u4E0B\u4E00\u9801");
 		nextPageButton.setEnabled(false);
-		nextPageButton.setBounds(235, 292, 86, 29);
+		nextPageButton.setBounds(393, 292, 86, 29);
 		frmYamdownloaderVersionFor.getContentPane().add(nextPageButton);
 		
 		previousPageButton = new JButton("\u4E0A\u4E00\u9801");
 		previousPageButton.setEnabled(false);
-		previousPageButton.setBounds(76, 292, 86, 29);
+		previousPageButton.setBounds(233, 292, 86, 29);
 		frmYamdownloaderVersionFor.getContentPane().add(previousPageButton);
 		
 		pageNumberLabel = new JLabel("");
-		pageNumberLabel.setBounds(174, 298, 49, 16);
+		pageNumberLabel.setBounds(343, 299, 49, 16);
 		frmYamdownloaderVersionFor.getContentPane().add(pageNumberLabel);
 		
 		downLoadProgressBar = new JProgressBar();
-		downLoadProgressBar.setBounds(333, 294, 146, 20);
+		downLoadProgressBar.setBounds(91, 362, 513, 20);
 		frmYamdownloaderVersionFor.getContentPane().add(downLoadProgressBar);
 		
 		albumNumberList.addMouseListener(new MouseAdapter() {
