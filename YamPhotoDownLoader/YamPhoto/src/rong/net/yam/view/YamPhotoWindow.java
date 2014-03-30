@@ -96,7 +96,7 @@ public class YamPhotoWindow {
 		
 		downLoadButton = new JButton("\u4E0B\u8F09");
 		downLoadButton.setEnabled(false);
-		downLoadButton.setBounds(438, 63, 86, 23);
+		downLoadButton.setBounds(438, 313, 86, 23);
 		frmYamdownloaderVersionFor.getContentPane().add(downLoadButton);
 		
 		stopDownLoadButton = new JButton("\u505C\u6B62");

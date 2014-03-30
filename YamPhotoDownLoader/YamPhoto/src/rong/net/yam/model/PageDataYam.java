@@ -17,7 +17,6 @@ public class PageDataYam {
 																	: HtmlContentGetter.getHtmlContent(webSite);
 
 		LinkedList<StringBuffer> albumNumberAndPhotoCountList = new LinkedList<StringBuffer>();
-		boolean isLocked = false;
    	   	for(String s : htmlContent) {
     	   		if(s.indexOf("/alt") > 0) {
     	   			albumNumberAndPhotoCountList.addLast(new StringBuffer(s.substring(s.indexOf("/alt") + 6, s.indexOf("\" titl")) + " "));
