@@ -16,15 +16,20 @@ public class PageDataYam {
 		ArrayList<String> htmlContent = (checkIsNewUser(userName)) ? HtmlContentGetter.getHtmlContent(webSite + userName)
 																	: HtmlContentGetter.getHtmlContent(webSite);
 
-		LinkedList<StringBuffer> albumNumberAndPhotoCountList = new LinkedList<StringBuffer>();
+		ArrayList<StringBuffer> albumName = new ArrayList<StringBuffer>();
+		ArrayList<StringBuffer> albumNumber = new ArrayList<StringBuffer>();
+		ArrayList<StringBuffer> photoCount = new ArrayList<StringBuffer>();
+		
    	   	for(String s : htmlContent) {
-    	   		if(s.indexOf("/alt") > 0) {
-    	   			albumNumberAndPhotoCountList.addLast(new StringBuffer(s.substring(s.indexOf("/alt") + 6, s.indexOf("\" titl")) + " "));
-    	   			System.out.println(s.substring(s.indexOf("/alt") + 6, s.indexOf("\" titl")));
-    	   		}
-    	   		else if(s.indexOf("<!-- 相片 -->") > 0) {
-    	   			albumNumberAndPhotoCountList.getLast().append(filterNumberForSubString(s.indexOf("相片") - 15, s.indexOf("相片"), s));
-    	   			albumNumberAndPhotoCountList.getLast().append(" (" + filterNumberForSubString(52, 70, s) + ")");
+    	   		if(s.indexOf("/" + getUserName() +"&folder") > 0) {
+    	   			if(s.indexOf("alt=") > 0) { 
+    	   				albumName.add(new StringBuffer(s.substring(s.indexOf("alt=") + 5, s.indexOf("\" titl")) + " "));
+    	   				System.out.println(s.substring(s.indexOf("alt") + 5, s.indexOf("\" titl")));
+    	   			}
+    	   			else if(s.indexOf("<!-- 相片 -->") > 0) {
+        	   			albumNumber.add(new StringBuffer(filterNumberForSubString(s.indexOf("相片") - 10, s.indexOf("相片"), s)));
+        	   			photoCount.add(new StringBuffer(" (" + filterNumberForSubString(52, 70, s) + ")"));
+        	   		}
     	   		}
     	   		else if(s.indexOf("<!-- 最後一頁 -->") > 0 && getPageNumber() == 0) {
     	   			StringBuffer string = new StringBuffer(filterNumberForSubString(s.indexOf("1/"), s.length(), s));
@@ -32,6 +37,12 @@ public class PageDataYam {
     	   			setPageNumber(Integer.valueOf(string.toString()));
     	   		}
     	   	}
+   	   	LinkedList<StringBuffer> albumNumberAndPhotoCountList = new LinkedList<StringBuffer>();
+   	   	for(int i = 0; i <  albumName.size(); i++) {
+   	   		albumNumberAndPhotoCountList.add(new StringBuffer(albumName.get(i)));
+   	   		albumNumberAndPhotoCountList.getLast().append(albumNumber.get(i));
+   	   		albumNumberAndPhotoCountList.getLast().append(photoCount.get(i));
+   	   	}
         return albumNumberAndPhotoCountList;
 	}
 	
@@ -72,7 +83,7 @@ public class PageDataYam {
 	public static void main(String[] args) {
 		PageDataYam pageDataYam = new PageDataYam();
 		System.out.println();
-		System.out.println(pageDataYam.getAlbumNumberForUserName("http://album.blog.yam.com/", "cooperbmlee"));
+		System.out.println(pageDataYam.getAlbumNumberForUserName("http://album.blog.yam.com/", "mihokaneko"));
 		System.out.println(pageDataYam.getPageNumber());
 	}
 }
