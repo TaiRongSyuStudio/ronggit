@@ -73,13 +73,14 @@ public class YamPhotoMonitor {
 		String albumNumber = albumNumberAndPhotoCount[albumNumberAndPhotoCount.length - 2];
 		String photoCount = albumNumberAndPhotoCount[albumNumberAndPhotoCount.length - 1];
 		downLoadThread = new DownLoadThread();
-		downLoadThread.setAlbumNumber(pageDataYam.filterNumberForSubString(0, albumNumber.length(), albumNumber));
-		downLoadThread.setPhotoCount(Integer.parseInt(pageDataYam.filterNumberForSubString(0, photoCount.length(), photoCount)));
+		downLoadThread.setAlbumNumber(albumNumber);
+		downLoadThread.setPhotoCount(Integer.parseInt(photoCount.substring(1, photoCount.length() - 1)));
 		downLoadThread.setUserName(pageDataYam.getUserName());
 		downLoadThread.setYamPhotoMonitor(this);
         Thread thread = new Thread(downLoadThread);
         setOnDownLoad(true);
         thread.start();
+        
         reversionDownLoadAndStopButton(false);
 	}
 	
