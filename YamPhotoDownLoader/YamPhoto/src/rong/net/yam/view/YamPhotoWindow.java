@@ -143,7 +143,6 @@ public class YamPhotoWindow {
 		albumListGetterButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println(userNameField.getText());
 				yamPhotoMonitor.viewAlbumNumberInList(userNameField.getText());
 			}
 		});
