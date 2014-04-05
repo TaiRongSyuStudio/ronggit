@@ -17,8 +17,7 @@ public class PageDataYam {
 																	: HtmlContentGetter.getHtmlContent(webSite);
 
 		ArrayList<StringBuffer> albumName = new ArrayList<StringBuffer>();
-		ArrayList<StringBuffer> albumNumber = new ArrayList<StringBuffer>();
-		ArrayList<StringBuffer> photoCount = new ArrayList<StringBuffer>();
+		ArrayList<StringBuffer> albumNumberAndPhotoCount = new ArrayList<StringBuffer>();
 		
    	   	for(String s : htmlContent) {
     	   		if(s.indexOf("/" + getUserName() +"&folder") > 0) {
@@ -27,8 +26,8 @@ public class PageDataYam {
     	   				System.out.println(s.substring(s.indexOf("alt") + 5, s.indexOf("\" titl")));
     	   			}
     	   			else if(s.indexOf("<!-- 相片 -->") > 0) {
-        	   			albumNumber.add(new StringBuffer(filterNumberForSubString(s.indexOf("相片") - 10, s.indexOf("相片"), s)));
-        	   			photoCount.add(new StringBuffer(" (" + filterNumberForSubString(52, 70, s) + ")"));
+    	   				albumNumberAndPhotoCount.add(new StringBuffer(filterNumberForSubString(s.indexOf("相片") - 10, s.indexOf("相片"), s)));
+    	   				albumNumberAndPhotoCount.get(albumNumberAndPhotoCount.size() - 1).append(" (" + filterNumberForSubString(52, 70, s) + ")");
         	   		}
     	   		}
     	   		else if(s.indexOf("<!-- 最後一頁 -->") > 0 && getPageNumber() == 0) {
@@ -40,8 +39,7 @@ public class PageDataYam {
    	   	LinkedList<StringBuffer> albumNumberAndPhotoCountList = new LinkedList<StringBuffer>();
    	   	for(int i = 0; i <  albumName.size(); i++) {
    	   		albumNumberAndPhotoCountList.add(new StringBuffer(albumName.get(i)));
-   	   		albumNumberAndPhotoCountList.getLast().append(albumNumber.get(i));
-   	   		albumNumberAndPhotoCountList.getLast().append(photoCount.get(i));
+   	   		albumNumberAndPhotoCountList.getLast().append(albumNumberAndPhotoCount.get(i));
    	   	}
         return albumNumberAndPhotoCountList;
 	}

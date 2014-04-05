@@ -261,7 +261,6 @@ public class YamPhotoWindow {
 			
 			fis = new FileInputStream(path.getParent() + "/config.xml");
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		xstream = new XStream();  

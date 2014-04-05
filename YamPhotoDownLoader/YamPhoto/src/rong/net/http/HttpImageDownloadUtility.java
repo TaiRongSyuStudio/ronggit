@@ -9,12 +9,12 @@ import javax.imageio.ImageIO;
 
 	public class HttpImageDownloadUtility {
 	 
-	    public static void downloadFile(String fileURL, String saveDir, String PhotoType)
+	    public static void downloadFile(String fileURL, String saveDir)
 	            throws IOException 
 	    {
 	        URL url = new URL(fileURL);
 	        HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-	        httpConn.addRequestProperty("referer", fileURL);
+	        httpConn.addRequestProperty("referer", "http://album.blog.yam.com/");
 	        int responseCode = httpConn.getResponseCode();
 	        
 	        if (responseCode == HttpURLConnection.HTTP_OK) {
@@ -48,7 +48,7 @@ import javax.imageio.ImageIO;
 
 	            image = ImageIO.read(httpConn.getInputStream());
 	            
-	            ImageIO.write(image, PhotoType, new File(saveFilePath));
+	            ImageIO.write(image, "jpg", new File(saveFilePath));
 	                
 	            System.out.println("File downloaded");
 	        } 
@@ -61,7 +61,7 @@ import javax.imageio.ImageIO;
 	        String fileURL = "http://pics9.yamedia.tw/11/userfile/p/pilipala/album/1487b67ad1cc30.jpg";
 	        String saveDir = "/Users/rong/Downloads/photo";
 	        try {
-	            HttpImageDownloadUtility.downloadFile(fileURL, saveDir, "jpg");
+	            HttpImageDownloadUtility.downloadFile(fileURL, saveDir);
 	        } catch (IOException ex) {
 	            ex.printStackTrace();
 	        }

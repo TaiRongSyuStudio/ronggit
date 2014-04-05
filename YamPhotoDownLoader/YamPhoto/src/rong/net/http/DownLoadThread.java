@@ -37,7 +37,7 @@ public class DownLoadThread implements Runnable {
    				}
    			} 
    			try {
-				HttpImageDownloadUtility.downloadFile(fileURL, getFolderPath(), configuration.getPhotoType());
+				HttpDownloadUtility.downloadFile(fileURL, getFolderPath());
 			} 
     			catch (IOException e) {
 				e.printStackTrace();
@@ -52,7 +52,9 @@ public class DownLoadThread implements Runnable {
     
     public void makeAlbumFolder() {
 		File folder = new File(getFolderPath());
-		folder.mkdir();    	
+		 if(!folder.exists()) {
+			 folder.mkdir();
+		}  	
     }
     
 	public void setUserName(String userName) {

@@ -1,5 +1,4 @@
 <config>
     <directory>/Users/rong/Downloads</directory>
     <wrongMessage>請輸入英數</wrongMessage>
-    <photoType>jpg</photoType>
 </config>
