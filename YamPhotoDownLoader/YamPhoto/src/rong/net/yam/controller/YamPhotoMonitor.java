@@ -84,6 +84,17 @@ public class YamPhotoMonitor {
         reversionDownLoadAndStopButton(false);
 	}
 	
+	public void suspendOrResumeDownLoad() {
+		if(yamPhotoWindow.getSuspendAndResumeButton().getText() == "暫停") {
+			downLoadThread.setSuspend();
+			yamPhotoWindow.getSuspendAndResumeButton().setText("恢復");
+		}
+		else {
+			downLoadThread.setResume();
+			yamPhotoWindow.getSuspendAndResumeButton().setText("暫停");
+		}
+	}
+	
 	public void stopDownLoad() {
 		reversionDownLoadAndStopButton(true);
 		downLoadThread.onStopDownload();
@@ -91,7 +102,9 @@ public class YamPhotoMonitor {
 	
 	public void reversionDownLoadAndStopButton(boolean e) {
         yamPhotoWindow.getDownLoadButton().setEnabled(e);
-        yamPhotoWindow.getStopDownLoadButton().setEnabled(!e);
+        yamPhotoWindow.getStopButton().setEnabled(!e);
+        yamPhotoWindow.getSuspendAndResumeButton().setEnabled(!e);
+        yamPhotoWindow.getSuspendAndResumeButton().setText("暫停");
 	}
 	
 	public void CheckOnDownLoadIng() {

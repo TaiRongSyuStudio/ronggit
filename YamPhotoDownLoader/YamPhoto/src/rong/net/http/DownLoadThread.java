@@ -10,6 +10,7 @@ import rong.net.yam.controller.YamPhotoMonitor;
 
 public class DownLoadThread implements Runnable {
 	private boolean isStop = true;
+	private boolean isSuspend = false;
 	private String folderPath;
 	private String userName;
 	private String albumNumber;
@@ -18,7 +19,18 @@ public class DownLoadThread implements Runnable {
 	
     public void onStopDownload() { 
     		isStop = false; 
+    		yamPhotoMonitor.setOnDownLoad(false);
+    		yamPhotoMonitor.getDownLoadProgressBar().setValue(0);
     } 
+    
+    public void setSuspend() {
+    		isSuspend = true;
+    	}
+    
+    public synchronized void setResume() {
+    		isSuspend = false;
+    		notify();
+    }
 
     public void run() { 
     		yamPhotoMonitor.getDownLoadProgressBar().setValue(0);
@@ -38,15 +50,19 @@ public class DownLoadThread implements Runnable {
    			} 
    			try {
 				HttpDownloadUtility.downloadFile(fileURL, getFolderPath());
+				
+				synchronized (this) {
+					while (isSuspend)
+						wait();
+				}
 			} 
-    			catch (IOException e) {
+    			catch (IOException | InterruptedException e) {
 				e.printStackTrace();
 			}
    			i++;
    			yamPhotoMonitor.getDownLoadProgressBar().setValue((i * 100) / photoCount);
     		}
         yamPhotoMonitor.reversionDownLoadAndStopButton(true);
-        yamPhotoMonitor.setOnDownLoad(false);
         onStopDownload();
     }
     

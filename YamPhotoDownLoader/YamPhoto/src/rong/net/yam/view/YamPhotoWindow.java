@@ -23,8 +23,6 @@ import java.nio.file.Paths;
 import javax.swing.JProgressBar;
 
 import com.thoughtworks.xstream.XStream;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 
 public class YamPhotoWindow {
@@ -34,7 +32,8 @@ public class YamPhotoWindow {
 	private JList albumNumberList;
 	private JButton albumListGetterButton;
 	private JButton downLoadButton;
-	private JButton stopDownLoadButton;
+	private JButton stopButton;
+	private JButton suspendAndResumeButton;
 	private JButton previousPageButton;
 	private JButton nextPageButton;
 	private JLabel pageNumberLabel;
@@ -72,7 +71,7 @@ public class YamPhotoWindow {
 		setConfiguration();
 		
 		frmYamdownloaderVersionFor = new JFrame();
-		frmYamdownloaderVersionFor.setTitle("YamAlbumDownLoader for java v1.3");
+		frmYamdownloaderVersionFor.setTitle("YamAlbumDownLoader for java v1.4");
 		frmYamdownloaderVersionFor.setBounds(100, 100, 554, 422);
 		frmYamdownloaderVersionFor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmYamdownloaderVersionFor.getContentPane().setLayout(null);
@@ -96,17 +95,13 @@ public class YamPhotoWindow {
 		
 		downLoadButton = new JButton("\u4E0B\u8F09");
 		downLoadButton.setEnabled(false);
-		downLoadButton.setBounds(438, 313, 86, 23);
+		downLoadButton.setBounds(439, 66, 86, 23);
 		frmYamdownloaderVersionFor.getContentPane().add(downLoadButton);
 		
-		stopDownLoadButton = new JButton("\u505C\u6B62");
-		stopDownLoadButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		stopDownLoadButton.setEnabled(false);
-		stopDownLoadButton.setBounds(438, 362, 86, 23);
-		frmYamdownloaderVersionFor.getContentPane().add(stopDownLoadButton);
+		stopButton = new JButton("\u505C\u6B62");
+		stopButton.setEnabled(false);
+		stopButton.setBounds(439, 189, 86, 23);
+		frmYamdownloaderVersionFor.getContentPane().add(stopButton);
 		
 		nextPageButton = new JButton("\u4E0B\u4E00\u9801");
 		nextPageButton.setEnabled(false);
@@ -132,6 +127,11 @@ public class YamPhotoWindow {
 		
 		albumNumberList = new JList();
 		scrollPane.setViewportView(albumNumberList);
+		
+		suspendAndResumeButton = new JButton("暫停");
+		suspendAndResumeButton.setEnabled(false);
+		suspendAndResumeButton.setBounds(438, 125, 87, 29);
+		frmYamdownloaderVersionFor.getContentPane().add(suspendAndResumeButton);
 		
 		albumNumberList.addMouseListener(new MouseAdapter() {
 			@Override
@@ -168,7 +168,14 @@ public class YamPhotoWindow {
 			}
 		});
 		
-		stopDownLoadButton.addMouseListener(new MouseAdapter() {
+		suspendAndResumeButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				yamPhotoMonitor.suspendOrResumeDownLoad();
+			}
+		});
+		
+		stopButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				yamPhotoMonitor.stopDownLoad();
@@ -188,13 +195,17 @@ public class YamPhotoWindow {
 	public JButton getAlbumListGetterButton() {
 		return albumListGetterButton;
 	}
+	
+	public JButton getSuspendAndResumeButton() {
+		return suspendAndResumeButton;
+	}
 
 	public JButton getDownLoadButton() {
 		return downLoadButton;
 	}
 
-	public JButton getStopDownLoadButton() {
-		return stopDownLoadButton;
+	public JButton getStopButton() {
+		return stopButton;
 	}
 
 	public void setYamPhotoMonitor(YamPhotoMonitor yamPhotoMonitor) {
